@@ -45,4 +45,23 @@
         <servlet-name>Servlet2</servlet-name>
         <url-pattern>/servlet2</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>ForwardC</servlet-name>
+        <servlet-class>com.qinh.ForwardC</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ForwardC</servlet-name>
+        <url-pattern>/forwardC</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResponseIOServlet</servlet-name>
+        <servlet-class>com.qinh.ResponseIOServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResponseIOServlet</servlet-name>
+        <url-pattern>/responseIOServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
