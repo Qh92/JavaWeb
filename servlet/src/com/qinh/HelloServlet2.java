@@ -19,6 +19,8 @@ public class HelloServlet2 extends HttpServlet {
         //不加super.init(config);会出现异常
         super.init(config);
         System.out.println("初始化工作......");
+        //3.获取ServletContext对象
+        System.out.println("获取ServletContext对象: " + config.getServletContext());
     }
 
     @Override
