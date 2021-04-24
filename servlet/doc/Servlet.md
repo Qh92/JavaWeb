@@ -560,7 +560,7 @@ MIME 的英文全称是"Multipurpose Internet Mail Extensions" 多功能 Interne
 
 
 
-# 1.HttpServletRequest 类
+# 5.HttpServletRequest 类
 
 
 
@@ -753,5 +753,181 @@ public class Servlet2 extends HttpServlet {
         System.out.println("Servlet2 处理自己的业务 ");
     }
 }
+```
+
+
+
+## **f) base** 标签的作用
+
+![image-20210425001533726](assets\image-20210425001533726.png)
+
+
+
+```xml
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!--base标签设置页面相对路径工作时参照的地址
+            href 属性就是参数的地址值
+    -->
+    <base href="http://localhost:8080/servlet2/a/b/">
+</head>
+<body>
+    这是a下的b下的c.html页面<br/>
+    <a href="../../index.html">跳回首页</a><br/>
+</body>
+</html>
+```
+
+
+
+## **g)Web** 中的相对路径和绝对路径
+
+
+
+在 javaWeb 中，路径分为相对路径和绝对路径两种： 
+
+相对路径是： 
+
+​	.              表示当前目录 
+
+​	..             表示上一级目录 
+
+​	资源名    表示当前目录/资源名 
+
+绝对路径： 
+
+http://ip:port/工程路径/资源路径 
+
+在实际开发中，路径都使用绝对路径，而不简单的使用相对路径。 
+
+1、绝对路径 
+
+2、base+相对 
+
+
+
+## **h)web** **中** **/** 斜杠的不同意义
+
+在 web 中 / 斜杠 是一种绝对路径。 
+
+/  斜杠   如果被浏览器解析，得到的地址是：http://ip:port/ 
+
+```xml
+<a href="/">斜杠</a>
+```
+
+
+
+/   斜杠    如果被服务器解析，得到的地址是：http://ip:port/工程路径 
+
+1、<**url-pattern**>/servlet1</**url-pattern**> 
+
+2、servletContext.getRealPath(“/”); 
+
+3、request.getRequestDispatcher(“/”); 
+
+特殊情况： response.sendRediect(“/”); 把斜杠发送给浏览器解析。得到 http://ip:port/
+
+
+
+# 6.HttpServletResponse类
+
+
+
+## a)HttpServletResponse类的作用
+
+HttpServletResponse 类和 HttpServletRequest 类一样。每次请求进来，Tomcat 服务器都会创建一个 Response 对象传 递给 Servlet 程序去使用。HttpServletRequest 表示请求过来的信息，HttpServletResponse 表示所有响应的信息， 我们如果需要设置返回给客户端的信息，都可以通过 HttpServletResponse 对象来进行设置
+
+
+
+## b)两个输出流的说明
+
+字节流   getOutputStream(); 常用于下载（传递二进制数据） 
+
+字符流   getWriter();              常用于回传字符串（常用） 
+
+两个流同时只能使用一个。 使用了字节流，就不能再使用字符流，反之亦然，否则就会报错。 
+
+![image-20210425002611064](assets\image-20210425002611064.png)
+
+
+
+## c)如何往客户端回传数据
+
+### 要求 ： 往客户端回传 字符串 数据。
+
+```java
+public class ResponseIOServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //ISO-8859-1
+        System.out.println(resp.getCharacterEncoding());
+
+        // 设置服务器字符集为UTF-8
+        //resp.setCharacterEncoding("UTF-8");
+        // 通过响应头，设置浏览器也使用UTF-8字符集
+        //resp.setHeader("Content-Type", "text/html; charset=UTF-8");
+
+        // 它会同时设置服务器和客户端都使用UTF-8字符集，还设置了响应头
+        // 此方法一定要在获取流对象之前调用才有效
+        resp.setContentType("text/html; charset=UTF-8");
+
+        //要求 ： 往客户端回传 字符串 数据。
+        PrintWriter writer = resp.getWriter();
+        writer.write("这是一个测试");
+    }
+}
+```
+
+
+
+## d)响应的乱码解决
+
+### 解决响应中文乱码方案一（不推荐使用）： 
+
+```java
+// 设置服务器字符集为UTF-8
+//resp.setCharacterEncoding("UTF-8");
+// 通过响应头，设置浏览器也使用UTF-8字符集
+//resp.setHeader("Content-Type", "text/html; charset=UTF-8");
+```
+
+
+
+### 解决响应中文乱码方案二（推荐）：
+
+```java
+// 它会同时设置服务器和客户端都使用UTF-8字符集，还设置了响应头
+// 此方法一定要在获取流对象之前调用才有效
+resp.setContentType("text/html; charset=UTF-8");
+```
+
+
+
+## e)请求重定向
+
+请求重定向，是指客户端给服务器发请求，然后服务器告诉客户端说。我给你一些地址。你去新地址访问。叫请求 重定向（因为之前的地址可能已经被废弃）。 
+
+![image-20210425003013119](assets\image-20210425003013119.png)
+
+
+
+请求重定向的第一种方案： 
+
+```java
+// 设置响应状态码 302 ，表示重定向，（已搬迁） 
+resp.setStatus(302); 
+// 设置响应头，说明 新的地址在哪里 
+resp.setHeader("Location", "http://localhost:8080");
+```
+
+请求重定向的第二种方案（推荐使用）： 
+
+```java
+resp.sendRedirect("http://localhost:8080");
 ```
 
