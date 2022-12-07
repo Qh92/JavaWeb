@@ -79,7 +79,7 @@ public class HelloServlet implements Servlet {
 
 2、执行 init 初始化方法 
 
-第一、二步，是在第一次访问，的时候创建 Servlet 程序会调用。 
+第一、二步，是在第一次访问的时候创建 Servlet 程序会调用。 
 
 3、执行 service 方法 
 
@@ -544,9 +544,9 @@ MIME 的英文全称是"Multipurpose Internet Mail Extensions" 多功能 Interne
 
 ![1619147639053](assets\1619147639053.png)
 
-​                           ![1619147655617](assets\1619147655617.png)
 
 
+ ![1619147655617](assets\1619147655617.png)                      
 
 ![1619147703665](assets\1619147703665.png)
 
@@ -791,11 +791,11 @@ public class Servlet2 extends HttpServlet {
 
 相对路径是： 
 
-​	.              表示当前目录 
-
-​	..             表示上一级目录 
-
-​	资源名    表示当前目录/资源名 
+	.              表示当前目录 
+	
+	..             表示上一级目录 
+	
+	资源名    表示当前目录/资源名 
 
 绝对路径： 
 
