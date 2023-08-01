@@ -4,6 +4,12 @@ import javax.servlet.*;
 import java.io.IOException;
 
 /**
+ * Servlet生命周期：
+ *      1.执行构造方法（第一次访问的时候创建）
+ *      2.执行init初始化方法（第一次访问的时候创建）
+ *      3.执行service方法（每次访问都会调用）
+ *      4.执行destroy销毁方法
+ *
  * @author Qh
  * @version 1.0
  * @date 2021-04-21-22:07
